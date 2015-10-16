@@ -46,12 +46,12 @@ Given /^I am on the RottenPotatoes home page$/ do
 # Add a declarative step here for populating the DB with movies.
 
 Given /the following movies have been added to RottenPotatoes:/ do |movies_table|
-  pending  # Remove this statement when you finish implementing the test step
   movies_table.hashes.each do |movie|
     # Each returned movie will be a hash representing one row of the movies_table
     # The keys will be the table headers and the values will be the row contents.
     # Entries can be directly to the database with ActiveRecord methods
     # Add the necessary Active Record call(s) to populate the database.
+    Movie.create(:title=>movie[:title], :rating=>movie[:rating], :release_date=>movie[:release_date])
   end
 end
 
@@ -59,16 +59,46 @@ When /^I have opted to see movies rated: "(.*?)"$/ do |arg1|
   # HINT: use String#split to split up the rating_list, then
   # iterate over the ratings and check/uncheck the ratings
   # using the appropriate Capybara command(s)
-  pending  #remove this statement after implementing the test step
+  movierating = arg1.split(', ')
+  
+  Movie.all_ratings.each do |x|
+    if movierating.include? x
+      check("ratings_#{x}")
+    else
+      uncheck("ratings_#{x}")
+    end
+    click_button "Refresh"
+  end
+  
 end
 
 Then /^I should see only movies rated: "(.*?)"$/ do |arg1|
-  pending  #remove this statement after implementing the test step
+  value=true
+  movierating = arg1.split(', ')
+  all("td[2]").each do |x|
+    if(!movierating.include?(x.text))
+      value=false 
+    end
+  end
+  expect(value).to be_truthy
 end
 
 Then /^I should see all of the movies$/ do
-  pending  #remove this statement after implementing the test step
+  Movie.all.size == all("tbody/tr").size.should
 end
 
+When /^I have opted to sort the movies alphapbetically by "(.*?)"$/ do |arg1|
+  click_on arg1
+end
 
+Then /^I should see this "(.*?)" before "(.*?)"$/ do |arg1, arg2|
+  page.body.should match /#{arg1}.*#{arg2}/m
+end
 
+When /^I have opted to sort the movies in increasing order of "(.*?)"$/ do |arg1|
+  click_on arg1
+end
+
+Then /^I should see "(.*?)" before "(.*?)"$/ do |arg1, arg2|
+  page.body.should match /#{arg1}.*#{arg2}/m
+end

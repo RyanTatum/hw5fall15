@@ -23,7 +23,29 @@ Background: movies have been added to database
 
 Scenario: sort movies alphabetically
   # your scenario here
+  When I have opted to sort the movies alphapbetically by "Movie Title"
+  Then I should see this "2001: A Space Odyssey" before "Aladdin"
+  Then I should see this "Aladdin" before "Amelie"
+  Then I should see this "Amelie" before "Chicken Run"
+  Then I should see this "Chicken Run" before "Chocolat"
+  Then I should see this "Chocolat" before "Raiders of the Lost Ark"
+  Then I should see this "Raiders of the Lost Ark" before "The Help"
+  Then I should see this "The Help" before "The Incredibles"
+  Then I should see this "The Incredibles" before "The Terminator"
+  Then I should see this "The Terminator" before "When Harry Met Sally"
 
 Scenario: sort movies in increasing order of release date
   # your scenario here
+  When I have opted to sort the movies in increasing order of "Release Date"
+  Then I should see "2001: A Space Odyssey" before "Raiders of the Lost Ark"
+  Then I should see "Raiders of the Lost Ark" before "The Terminator"
+  Then I should see "The Terminator" before "When Harry Met Sally"
+  Then I should see "When Harry Met Sally" before "Aladdin"
+  Then I should see "Aladdin" before "Chicken Run"
+  Then I should see "Chicken Run" before "Chocolat"
+  Then I should see "Chocolat" before "Amelie"
+  Then I should see "Amelie" before "The Incredibles"
+  Then I should see "The Incredibles" before "The Help"
+  
+  
 

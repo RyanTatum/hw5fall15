@@ -76,11 +76,11 @@ class MoviesController < ApplicationController
   end
   
   def add_tmdb
-    movies = params[:tmdb_movies]
-    if(movies.length==0 || movies==nil)
+    matching_movies = params[:tmdb_movies]
+    if(matching_movies.length==0 || matching_movies==nil)
       flash[:notice] = "No movies selected"
     else
-      movies.keys.each do |x|
+      matching_movies.keys.each do |x|
         Movie.create_from_tmdb(x)
       end
       flash[:notice] = "Movies successfully added to RottenPotatoes"

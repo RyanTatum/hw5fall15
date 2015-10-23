@@ -77,7 +77,7 @@ class MoviesController < ApplicationController
   
   def add_tmdb
     matching_movies = params[:tmdb_movies]
-    if(matching_movies==nil || matching_movies.length==0)
+    if(matching_movies==nil)
       flash[:notice] = "No movies selected"
     else
       matching_movies.keys.each do |x|

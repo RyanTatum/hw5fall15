@@ -9,7 +9,7 @@
         %th Release Date
         %th Select
     %tbody
-      - @movies.each do |movie|
+      - @matching_movies.each do |movie|
         %tr
           %td= movie[:title]
           %td= movie[:rating]

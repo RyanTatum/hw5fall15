@@ -60,5 +60,31 @@ class MoviesController < ApplicationController
     flash[:notice] = "Movie '#{@movie.title}' deleted."
     redirect_to movies_path
   end
-
+  
+  def search_tmdb
+    @input = params[:seach_tmdb]['input']
+    if(@input=="" || @input==nil)
+      flash[:notice] = "Invalid search term"
+      redirect_to movies_path
+    else
+      @matching_movies = Movie.find_in_tmdb(@input)
+      if(@matching_movies==nil || @matching_movies.length==0)
+        flash[:notice] = "No matching movies werer found on TMDb"
+        redirect_to movies_path
+      end
+    end
+  end
+  
+  def add_tmdb
+    @addedmovies = params[:]
+    if(@addedmovies.length==0 || @addedmovies==nil)
+      flash[:notice] = "No movies selected"
+    else
+      @addmovies.keys.each do |x|
+        Movie.create_from_tmdb(x)
+      end
+      flash[:notice] = "Movies successfully added to RottenPotatoes"
+    end
+    redirect_to movies_path
+  end
 end

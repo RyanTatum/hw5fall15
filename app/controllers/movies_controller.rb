@@ -76,7 +76,7 @@ class MoviesController < ApplicationController
   end
   
   def add_tmdb
-    @addedmovies = params[:]
+    @addedmovies = params[:tmdb_movies]
     if(@addedmovies.length==0 || @addedmovies==nil)
       flash[:notice] = "No movies selected"
     else

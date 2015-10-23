@@ -15,6 +15,6 @@
           %td= movie[:rating]
           %td= movie[:release_date]
           %td=check_box_tag "tmdb_movies[#{movie[:tmdb_id]}]"
-    %br
+%br
     = submit_tag "Add Selected Movies"
 =link_to "Return to movie list", movies_path
